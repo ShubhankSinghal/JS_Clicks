@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html>
     <head>
-        <title>Random Click</title>
+        <title>Random Clicks</title>
         <style>
 
-            .square
+            .square /* To give a div, shape of a square*/
             {
                 position: absolute;
                 height:50px;
@@ -13,7 +12,7 @@
                 display:none;
             }
 
-            .circle
+            .circle /* To give a div, shape of a circle */
             {
                 position: absolute;
                 height: 50px;
@@ -22,7 +21,7 @@
                 display:none;
             }
 
-            .triangle
+            .triangle /* To give a div, shape of a triangle*/
             {
                 position:absolute;
                 height: 0;
@@ -34,7 +33,7 @@
                 display: none;
             }
 
-            .display
+            .display /* CSS part for a timer text box on top */
             {
                 height:20px;
                 width:100px;
@@ -46,7 +45,7 @@
                 position:fixed;
             }
 
-            .display1
+            .display1 /* CSS part for a result text box on top*/
             {
                 height:20px;
                 width:100px;
@@ -60,24 +59,33 @@
 
         </style>
     </head>
+
     <body>
         <button onclick="start(); show();" style="top:0; left:0; margin:auto;position:fixed;">Start Timer</button>
+        
         <div class="display" id="txt"></div>
+        
         <button onclick="stop()" style="top:0; left:182px; margin:auto;position:fixed;">Stop Timer</button>
+        
         <button onclick="reset()" style="top:0; left:262px; margin:auto;position:fixed;">Reset Timer</button>
+        
         <div class="display1" id='txt1'></div>
+        
         <div class='square' id='square' onclick="square()"></div>
+        
         <div class='circle' id='circle' onclick="circle()"></div>
+        
         <div class='triangle' id='triangle' onclick="triangle()"></div>
+        
         <script>
-            var t,t1=0,l,b,i,color,id1;
-            var ch= ['square', 'circle', 'triangle'];
+            var temp,timer=0,width,height,loop,color,id1;
+            var arr= ['square', 'circle', 'triangle'];
             var alphabet = 'abcdef0123456789ABCDEF'.split('');
             
             function color1()
             {
                 color='#';
-                for(i=0;i<6;i++)              
+                for(loop=0;loop<6;loop++)              
                 {   
                     color+=alphabet[(Math.floor((Math.random()*alphabet.length))).toString()];
                 }
@@ -86,9 +94,9 @@
 
             function timerStart()
             {
-                t1=t1+1;
-                t=setTimeout(timerStart, 1000);
-                document.getElementById('txt').innerHTML= t1;
+                timer=timer+1;
+                temp=setTimeout(timerStart, 1000);
+                document.getElementById('txt').innerHTML= timer;
             }
 
             function start()
@@ -98,27 +106,27 @@
 
             function stop()
             {
-                clearTimeout(t);
+                clearTimeout(temp);
             }
 
             function reset()
             {
-                document.getElementById('txt1').innerHTML= t1;
-                t1=0;
-                document.getElementById('txt').innerHTML= t1;
+                document.getElementById('txt1').innerHTML= timer;
+                timer=0;
+                document.getElementById('txt').innerHTML= timer;
             }
 
             function position()
             {
-                id1=ch[(Math.floor(Math.random() * ch.length))];
-                l=(Math.floor(Math.random() * 1024));
-                b=(Math.floor(Math.random() * 600));
-                document.getElementById(id1).style.top= b+"px";
-                document.getElementById(id1).style.right= l+"px";
-                l=(Math.floor(Math.random() * 1024));
-                b=(Math.floor(Math.random() * 600));
-                document.getElementById(id1).style.bottom= b+"px";
-                document.getElementById(id1).style.left= l+"px"; 
+                id1=arr[(Math.floor(Math.random() * arr.length))];
+                width=(Math.floor(Math.random() * 1024));
+                height=(Math.floor(Math.random() * 600));
+                document.getElementById(id1).style.top= height+"px";
+                document.getElementById(id1).style.right= width+"px";
+                width=(Math.floor(Math.random() * 1024));
+                heigth=(Math.floor(Math.random() * 600));
+                document.getElementById(id1).style.bottom= height+"px";
+                document.getElementById(id1).style.left= width+"px"; 
             }
 
             function show()
@@ -149,8 +157,9 @@
                 show();
             }
 
-            document.getElementById('txt').innerHTML= t1;
-            document.getElementById('txt1').innerHTML= t1;
+            /* To initially display zero at the start */
+            document.getElementById('txt').innerHTML= timer;
+            document.getElementById('txt1').innerHTML= timer;
         </script>
     </body>
 </html>
