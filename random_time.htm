@@ -35,6 +35,7 @@
 
             .display /* CSS part for a timer text box on top */
             {
+                background-color: white;
                 height:20px;
                 width:100px;
                 text-align: center;
@@ -44,9 +45,10 @@
                 margin:auto;
                 position:fixed;
             }
-
+            
             .display1 /* CSS part for a result text box on top*/
             {
+                background-color: white;
                 height:20px;
                 width:100px;
                 text-align: center;
@@ -60,106 +62,121 @@
         </style>
     </head>
 
-    <body>
+    <body id='body'>
         <button onclick="start(); show();" style="top:0; left:0; margin:auto;position:fixed;">Start Timer</button>
-        
         <div class="display" id="txt"></div>
-        
-        <button onclick="stop()" style="top:0; left:182px; margin:auto;position:fixed;">Stop Timer</button>
-        
+        <button onclick="pause()" style="top:0; left:182px; margin:auto;position:fixed;">Pause Timer</button>
         <button onclick="reset()" style="top:0; left:262px; margin:auto;position:fixed;">Reset Timer</button>
-        
         <div class="display1" id='txt1'></div>
         
         <div class='square' id='square' onclick="square()"></div>
-        
         <div class='circle' id='circle' onclick="circle()"></div>
-        
         <div class='triangle' id='triangle' onclick="triangle()"></div>
         
         <script>
             var temp,timer=0,width,height,loop,color,id1;
             var arr= ['square', 'circle', 'triangle'];
-            var alphabet = 'abcdef0123456789ABCDEF'.split('');
+            var alphabet = 'abcdef0123456789'.split('');
             
-            function color1()
+            function color1() /* Function to randomly generate color */
             {
                 color='#';
+                
                 for(loop=0;loop<6;loop++)              
                 {   
                     color+=alphabet[(Math.floor((Math.random()*alphabet.length))).toString()];
                 }
+                
+                if(color == '#ffffff') /* if color bychance becomes white, it will make the background black for that case */
+                {
+                    document.getElementById('body').style.backgroundColor= "#000000"
+                }
+                else
+                {
+                    document.getElementById('body').style.backgroundColor= "#ffffff"
+                }
+                
                 document.getElementById(id1).style.backgroundColor= color;    
             }
 
-            function timerStart()
+            function timerStart() /* Infinite function for timer */
             {
                 timer=timer+1;
                 temp=setTimeout(timerStart, 1000);
                 document.getElementById('txt').innerHTML= timer;
             }
 
-            function start()
+            function start() /* function to call timestart() i.e. to start timer */
             {
                 timerStart();
             }
 
-            function stop()
+            function pause() /* To break infinte loop of timerStart(), stops the timer */
             {
                 clearTimeout(temp);
             }
 
-            function reset()
+            function after_click() /* Function to perform task after clicks */
             {
                 document.getElementById('txt1').innerHTML= timer;
                 timer=0;
                 document.getElementById('txt').innerHTML= timer;
             }
 
-            function position()
+            function reset() /* function to reset everything as when it was first opened */
+            {
+                pause();
+                timer=0;
+                document.getElementById('txt1').innerHTML= timer;
+                document.getElementById('txt').innerHTML= timer;
+                document.getElementById(id1).style.display = "none"; 
+            }
+
+            function position() /* function for randomly generating position of div */
             {
                 id1=arr[(Math.floor(Math.random() * arr.length))];
                 width=(Math.floor(Math.random() * 1024));
-                height=(Math.floor(Math.random() * 600));
+                height=(Math.floor(Math.random() * 550));
                 document.getElementById(id1).style.top= height+"px";
                 document.getElementById(id1).style.right= width+"px";
                 width=(Math.floor(Math.random() * 1024));
-                heigth=(Math.floor(Math.random() * 600));
+                heigth=(Math.floor(Math.random() * 550));
                 document.getElementById(id1).style.bottom= height+"px";
                 document.getElementById(id1).style.left= width+"px"; 
             }
 
-            function show()
+            function show() /* To show the div with random position and colors */
             {
                 position();
                 document.getElementById(id1).style.display = "block";
                 color1();
             }
 
-            function square()
+            function square() /* function to perform task after clicking a square */ 
             {
                 document.getElementById('square').style.display = "none";
-                reset();
+                after_click();
                 show();
             }
 
-            function triangle()
+            function triangle() /* function to perform task after clicking a square */
             {
                 document.getElementById('triangle').style.display = "none"; 
-                reset();
+                after_click();
                 show();
             }
 
-            function circle()
+            function circle() /* function to perform task after clicking a square */
             {
                 document.getElementById('circle').style.display = "none";
-                reset();
+                after_click();
                 show();
             }
 
             /* To initially display zero at the start */
             document.getElementById('txt').innerHTML= timer;
             document.getElementById('txt1').innerHTML= timer;
+        
         </script>
     </body>
 </html>
