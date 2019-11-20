@@ -1,101 +1,155 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Random Clicks'</title>
+        <title>Random Click</title>
         <style>
-            .main
+
+            .square
             {
-                display:flex;
-                padding : 10px;
+                position: absolute;
+                height:50px;
+                width:50px;
+                display:none;
             }
-            .circle 
+
+            .circle
             {
-                margin:auto;
+                position: absolute;
                 height: 50px;
                 width: 50px;
-                padding : 10px;
-                background-color: #555;
-                border-radius: 50%;
+                border-radius: 25px;
+                display:none;
             }
-            .square 
+
+            .triangle
             {
-                padding : 10px;
-                height: 50px;
-                width: 50px;
-                background-color: #555;
-            }
-            .triangle 
-            {
-                width: 0;
+                position:absolute;
                 height: 0;
+                width:0;
+                border-top:0;
                 border-left: 25px solid transparent;
                 border-right: 25px solid transparent;
-                border-bottom: 50px solid #555;
+                border-bottom: 50px solid grey;
+                display: none;
             }
+
             .display
             {
-                border:1px solid black;
+                height:20px;
+                width:100px;
                 text-align: center;
-                height: 10px;
-                width: 70px;
-                right:0;
-                left:0;
+                border:1px solid black;
+                top:0;
+                left:80px;
                 margin:auto;
-                padding:10px;
+                position:fixed;
             }
+
+            .display1
+            {
+                height:20px;
+                width:100px;
+                text-align: center;
+                border:1px solid black;
+                top:0;
+                left:350px;
+                margin:auto;
+                position:fixed;
+            }
+
         </style>
     </head>
     <body>
-        <div class="main">
-            <div class='circle' onclick="circle()" style="display: block;" id="circle"> </div>
-            <div class="square" onclick="square()" style="display: none;" id="square"></div>
-            <div class="triangle" onclick="triangle()" style="display: none;" id="triangle"></div>
-        </div>
+        <button onclick="start(); show();" style="top:0; left:0; margin:auto;position:fixed;">Start Timer</button>
         <div class="display" id="txt"></div>
-        <button onclick="stop()">Stop</button>
+        <button onclick="stop()" style="top:0; left:182px; margin:auto;position:fixed;">Stop Timer</button>
+        <button onclick="reset()" style="top:0; left:262px; margin:auto;position:fixed;">Reset Timer</button>
+        <div class="display1" id='txt1'></div>
+        <div class='square' id='square' onclick="square()"></div>
+        <div class='circle' id='circle' onclick="circle()"></div>
+        <div class='triangle' id='triangle' onclick="triangle()"></div>
         <script>
-            var t2=0;
-            var t;
-
-            function timedCount() 
+            var t,t1=0,l,b,i,color,id1;
+            var ch= ['square', 'circle', 'triangle'];
+            var alphabet = 'abcdef0123456789ABCDEF'.split('');
+            
+            function color1()
             {
-                t2 = t2 + 1;
-                t=setTimeout(timedCount, 1000);
+                color='#';
+                for(i=0;i<6;i++)              
+                {   
+                    color+=alphabet[(Math.floor((Math.random()*alphabet.length))).toString()];
+                }
+                document.getElementById(id1).style.backgroundColor= color;    
             }
 
-            function circle()
+            function timerStart()
             {
-                document.getElementById('txt').innerHTML= t2;
-                t2=0;
-                document.getElementById("circle").style.display = "none";
-                document.getElementById("triangle").style.display = "block";
-                document.getElementById("square").style.display = "none";
+                t1=t1+1;
+                t=setTimeout(timerStart, 1000);
+                document.getElementById('txt').innerHTML= t1;
+            }
+
+            function start()
+            {
+                timerStart();
+            }
+
+            function stop()
+            {
+                clearTimeout(t);
+            }
+
+            function reset()
+            {
+                document.getElementById('txt1').innerHTML= t1;
+                t1=0;
+                document.getElementById('txt').innerHTML= t1;
+            }
+
+            function position()
+            {
+                id1=ch[(Math.floor(Math.random() * ch.length))];
+                l=(Math.floor(Math.random() * 1024));
+                b=(Math.floor(Math.random() * 600));
+                document.getElementById(id1).style.top= b+"px";
+                document.getElementById(id1).style.right= l+"px";
+                l=(Math.floor(Math.random() * 1024));
+                b=(Math.floor(Math.random() * 600));
+                document.getElementById(id1).style.bottom= b+"px";
+                document.getElementById(id1).style.left= l+"px"; 
+            }
+
+            function show()
+            {
+                position();
+                document.getElementById(id1).style.display = "block";
+                color1();
             }
 
             function square()
             {
-                document.getElementById('txt').innerHTML= t2;
-                t2=0;
-                document.getElementById("square").style.display = "none";
-                document.getElementById("triangle").style.display = "none";
-                document.getElementById("circle").style.display = "block";
+                document.getElementById('square').style.display = "none";
+                reset();
+                show();
             }
 
             function triangle()
             {
-                document.getElementById('txt').innerHTML= t2;
-                t2=0;
-                document.getElementById("triangle").style.display = "none";
-                document.getElementById("circle").style.display = "none";
-                document.getElementById("square").style.display = "block";
+                document.getElementById('triangle').style.display = "none"; 
+                reset();
+                show();
             }
 
-            function stop() 
+            function circle()
             {
-                clearTimeout(t);
+                document.getElementById('circle').style.display = "none";
+                reset();
+                show();
             }
-            
-            timedCount();
+
+            document.getElementById('txt').innerHTML= t1;
+            document.getElementById('txt1').innerHTML= t1;
         </script>
     </body>
 </html>
